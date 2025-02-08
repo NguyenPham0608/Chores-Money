@@ -26,7 +26,7 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
-    margin: 20px;
+    /* margin: 20px; */
     
 }
 
@@ -38,6 +38,16 @@ body {
     width: 300px;
     text-align: center;
     
+}
+
+#addLog {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    margin: 20px;
 }
 
 #log{
@@ -68,6 +78,9 @@ button:hover {
 .delete-btn:hover {
     background-color: #ff0000;
 }
+.approved-btn:hover {
+    background-color: #ff0000;
+}
 ul {
     list-style: none;
     padding: 0;
@@ -84,6 +97,17 @@ li {
     animation: fadeInUp 0.4s forwards;
 }
 .delete-btn {
+    background: #FF7F00;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    width: 60px;
+}
+
+.approved-btn {
     background: #FF7F00;
     color: white;
     border: none;
