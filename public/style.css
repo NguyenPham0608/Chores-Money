@@ -50,6 +50,15 @@ body {
     margin: 20px;
 }
 
+#pendingList{
+    max-height: 240px;
+    overflow-y: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+}
+
 #log{
     max-height: 240px;
     overflow-y: auto;
@@ -67,19 +76,22 @@ input, button {
     border-radius: 5px;
 }
 button {
-    background-color: #0db60d;
+    background-color: #0055ff;
     color: white;
     cursor: pointer;
+    border: none;
 }
 button:hover {
     background-color: #0077ff;
-    box-shadow: 0px 0px 10px rgba(18, 18, 18, 0.444);
+    box-shadow: 0px 0px 10px rgb(0, 55, 255);
 }
 .delete-btn:hover {
     background-color: #ff0000;
+    box-shadow: 0px 0px 10px rgb(255, 0, 0);
 }
 .approved-btn:hover {
-    background-color: #ff0000;
+    background-color: #33ff00;
+    box-shadow: 0px 0px 10px rgb(13, 255, 0);
 }
 ul {
     list-style: none;
@@ -97,7 +109,7 @@ li {
     animation: fadeInUp 0.4s forwards;
 }
 .delete-btn {
-    background: #FF7F00;
+    background: #ff0066;
     color: white;
     border: none;
     padding: 5px;
@@ -108,14 +120,15 @@ li {
 }
 
 .approved-btn {
-    background: #FF7F00;
+    background-color: #30b010;
     color: white;
     border: none;
     padding: 5px;
     cursor: pointer;
     text-align: center;
     border-radius: 5px;
-    width: 60px;
+    width: 50%;
+    border: none;
 }
 
 #money{
@@ -137,10 +150,10 @@ li {
 @keyframes fadeOut {
     from {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0);
     }
     to {
         opacity: 0;
-        transform: scale(0.2);
+        transform: translateY(20px);
     }
 }

@@ -17,6 +17,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
+
 // Add chore to Firestore
 async function addLog() {
     const logInput = document.getElementById('logInput');
@@ -56,7 +58,7 @@ async function addApprovedLog(chore,money,button,docId) {
             console.log("Deleting chore:", docId);  // Debugging log
             await deleteDoc(doc(db, "chores", docId));  // Delete from Firestore
             li.remove();
-        }, 300);
+        }, 200);
     } catch (e) {
         console.error("Error adding document: ", e);
     }
@@ -70,7 +72,7 @@ async function deleteLog(docId, button) {
         console.log("Deleting chore:", docId);  // Debugging log
         await deleteDoc(doc(db, "approvedChores", docId));  // Delete from Firestore
         li.remove();
-    }, 300);
+    }, 200);
 }
 
 async function approveLog(docId, button) {
