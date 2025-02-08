@@ -1,15 +1,35 @@
 * {
-    transition: 0.4s all ease-in-out;
+    transition: 0.4s all ;
     font-family: comfortaa;
+    overflow: hidden;
 }
 body {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+
     justify-content: center;
     height: 100vh;
     background-color: #f4f4f4;
 }
+.ui{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#addChore {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    margin: 20px;
+    
+}
+
 .container {
     background: white;
     padding: 20px;
@@ -17,6 +37,17 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
+    
+}
+
+#log{
+    max-height: 240px;
+    overflow-y: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+
 }
 input, button {
     width: 90%;
@@ -26,7 +57,7 @@ input, button {
     border-radius: 5px;
 }
 button {
-    background-color: #28a745;
+    background-color: #0db60d;
     color: white;
     cursor: pointer;
 }
@@ -42,7 +73,7 @@ ul {
     padding: 0;
 }
 li {
-    background: #ddd;
+    background: #efefef;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
@@ -53,13 +84,14 @@ li {
     animation: fadeInUp 0.4s forwards;
 }
 .delete-btn {
-    background: rgb(255, 136, 0);
+    background: #FF7F00;
     color: white;
     border: none;
     padding: 5px;
     cursor: pointer;
+    text-align: center;
     border-radius: 5px;
-    width: 50px;
+    width: 60px;
 }
 
 #money{
@@ -70,7 +102,7 @@ li {
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -85,6 +117,6 @@ li {
     }
     to {
         opacity: 0;
-        transform: scale(0.8);
+        transform: scale(0.2);
     }
 }
