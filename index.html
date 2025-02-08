@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            transition: 0.4s all ease-in-out;
+            font-family: comfortaa;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        input, button {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0077ff;
+            box-shadow: 0px 0px 10px rgba(18, 18, 18, 0.444);
+        }
+        .delete-btn:hover {
+            background-color: #ff0000;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #ddd;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.4s forwards;
+        }
+        .delete-btn {
+            background: rgb(255, 136, 0);
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 50px;
+        }
+
+        #money{
+            justify-content: left;
+            width: 50%;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Chores</h2>
+        <input type="text" id="logInput" placeholder="Enter your chore">
+        <input type="text" id="money" placeholder="Money Earned">
+        <button onclick="addLog()">Add Chore</button>
+        <ul id="logList"></ul>
+    </div>
+
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyARPjGht5NCpztYmZ2-TJnO7wkCX3_jSJk",
+            authDomain: "chores-log.firebaseapp.com",
+            projectId: "chores-log",
+            storageBucket: "chores-log.appspot.com",
+            messagingSenderId: "209423809491",
+            appId: "1:209423809491:web:de2f1bc79994b1ac8ccd26",
+            measurementId: "G-1C5C7EH9JK"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Add chore to Firestore
+        async function addLog() {
+            const logInput = document.getElementById('logInput');
+            const money = document.getElementById('money');
+            const logText = logInput.value.trim();
+            const moneyAmount = money.value.trim();
+
+            if (logText === "" || moneyAmount === "") return;
+
+            try {
+                // Add new chore to Firestore
+                await addDoc(collection(db, "chores"), {
+                    chore: logText,
+                    money: moneyAmount,
+                    timestamp: new Date()
+                });
+
+                logInput.value = '';
+                money.value = '';
+                loadLogs();  // Refresh the list after adding
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        }
+
+        // Delete chore from Firestore
+        async function deleteLog(button, docId) {
+            const li = button.parentElement;
+            li.style.animation = "fadeOut 0.3s forwards";
+            setTimeout(async () => {
+                await deleteDoc(doc(db, "chores", docId));  // Delete from Firestore
+                li.remove();
+            }, 300);
+        }
+
+        // Load chores from Firestore
+        async function loadLogs() {
+            const logList = document.getElementById('logList');
+            logList.innerHTML = ''; // Clear current list
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "chores"));
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const li = document.createElement('li');
+                    li.innerHTML = `${data.chore} $${data.money} <button class="delete-btn" onclick="deleteLog(this, '${doc.id}')">Delete</button>`;
+                    logList.appendChild(li);
+                });
+            } catch (e) {
+                console.error("Error getting documents: ", e);
+            }
+        }
+
+        // Load chores when the page loads
+        window.onload = loadLogs;
+    </script>
+
+</body>
+</html>

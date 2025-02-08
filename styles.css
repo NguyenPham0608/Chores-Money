@@ -1,0 +1,72 @@
+*{
+    font-family: comfortaa;
+    margin: 30px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: 0.5s all;
+    border: none;
+}
+
+#chores{
+    position: absolute;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+}
+
+body{
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+#choresDropdown{
+    font-size: 25px;
+    width: 100%;
+    margin: 10px;
+    border-radius: 20px;
+    border: none;
+}
+
+#addChore{
+    font-size: 30px;
+    border-radius: 20px;
+    padding: 15px;
+    background-color: blanchedalmond;
+    border: none;
+}
+
+.form-text{
+    font-size: 20px;
+    border-radius: 20px;
+    padding: 15px;
+    border: none;
+}
+
+select:focus {
+    border-color: #45a049;
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
+}
+
+input:focus {
+    border-color: #45a049;
+    box-shadow: 0 0 10px rgba(255, 204, 0, 0.773);
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border: none;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.7);
+}
+
+button:hover {
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
+}
+  
+  
