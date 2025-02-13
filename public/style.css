@@ -131,6 +131,13 @@ li {
     border: none;
 }
 
+#total{
+    justify-content: center;
+    width: 300px;
+    text-align: center;
+    margin: 20px;
+}
+
 #money{
     justify-content: left;
     width: 50%;

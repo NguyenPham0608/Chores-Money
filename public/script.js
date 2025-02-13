@@ -17,6 +17,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+const total = document.getElementById('total');
+
+async function updateSpan() {
+    const querySnapshot = await getDocs(collection(db, "approvedChores"));
+    let totalMoney = 0;
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        totalMoney += parseFloat(data.approvedMoney);
+    });
+    total.innerText = 'Total: $ ' + totalMoney.toFixed(2);
+}
 
 
 // Add chore to Firestore
@@ -131,9 +142,15 @@ async function loadApprovedLogs() {
             li.appendChild(deleteButton);
             logList.appendChild(li);
         });
+        updateSpan();
     } catch (e) {
         console.error("Error getting documents: ", e);
     }
+}
+
+function loop(){
+    updateSpan();
+    requestAnimationFrame(loop);
 }
 
 // Add event listener to the button after the page has loaded
@@ -141,4 +158,7 @@ window.onload = () => {
     document.getElementById('addButton').addEventListener('click', addLog);
     loadLogs();  // Load chores when the page loads
     loadApprovedLogs();
+    updateSpan();
 };
+
+loop();
