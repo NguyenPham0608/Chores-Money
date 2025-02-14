@@ -1,7 +1,8 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
-
+import Coin from "./coin.js";
+import { override } from "./coin.js";
 // Firebase config
 const firebaseConfig = {
     apiKey: "AIzaSyARPjGht5NCpztYmZ2-TJnO7wkCX3_jSJk",
@@ -17,8 +18,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const total = document.getElementById('total');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 
+const scale = window.devicePixelRatio; // Get device's pixel ratio
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+ctx.scale(scale, scale);
+
+const total = document.getElementById('total');
+let coinArray=[];
+
+
+function addCoin(x, y, scale) {
+    const coin = new Coin(x,y , 734*scale, 720*scale);
+    coinArray.push(coin);
+    coin.draw(ctx);
+}
 async function updateSpan() {
     const querySnapshot = await getDocs(collection(db, "approvedChores"));
     let totalMoney = 0;
@@ -54,7 +70,7 @@ async function addLog() {
 }
 
 async function addApprovedLog(chore,money,button,docId) {
-
+    explodeCoins(50)
     try {
         console.log("Adding log to Firestore:", chore, money);  // Debugging log
         await addDoc(collection(db, "approvedChores"), {
@@ -112,8 +128,7 @@ async function loadLogs() {
             const approveButton = document.createElement('button');
             approveButton.classList.add('approved-btn');
             approveButton.textContent = 'Approve';
-            approveButton.addEventListener('click', () => addApprovedLog(data.chore, data.money, approveButton, doc.id));
-
+            approveButton.addEventListener('click',() => addApprovedLog(data.chore, data.money, approveButton, doc.id));
             li.appendChild(approveButton);
             pendingList.appendChild(li);
         });
@@ -148,8 +163,19 @@ async function loadApprovedLogs() {
     }
 }
 
+
 function loop(){
+    ctx.clearRect(0, 0, 100000000, 10000000000);
+    if(!override){
+
+    }
+    coinArray.forEach((coin) => {
+        coin.draw(ctx)
+    });
+
     updateSpan();
+    coinArray = coinArray.filter(coin => !coin.markedForDeletion);
+
     requestAnimationFrame(loop);
 }
 
@@ -160,5 +186,11 @@ window.onload = () => {
     loadApprovedLogs();
     updateSpan();
 };
+
+function explodeCoins(number) {
+    for (let i = 0; i < number; i++) {
+        addCoin(window.innerWidth/2, window.innerHeight/2, 0.1);
+    }
+}
 
 loop();
