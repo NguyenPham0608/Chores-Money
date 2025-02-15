@@ -2,20 +2,26 @@ const canvas = document.getElementById('canvas');
 export let override = true;
 export default class Coin {
     constructor(x, y, width, height) {
+        this.t=0
         this.x = x;
         this.y = y;
         this.collected=false
         this.scale = getRandom(0.2, 0.4);
         this.sx = getRandom(-8, 8);
         this.sy = getRandom(-8, 8);
-        this.width = width * this.scale;
-        this.height = height * this.scale;
+        this.ogWidth = width;
+        this.ogHeight = height;
+        this.width = this.ogWidth * this.scale;
+        this.height = this.ogHeight * this.scale;
         this.img = new Image();
         this.img.src = "images/coin.png";
+        this.randomInt=getRandom(5, 50)
         this.markedForDeletion = false; // Flag to mark for removal
     }
 
     update() {
+        this.t++
+        this.width=Math.sin(this.t/this.randomInt)*this.ogWidth * this.scale
         if(!this.collected){
             if(!override){
                 this.sy-=0.1;
