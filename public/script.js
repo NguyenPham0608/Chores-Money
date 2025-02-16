@@ -47,37 +47,39 @@ async function updateSpan() {
 
 async function getChore(){
     const dropdown=document.getElementById('choreSelect');
-    const selectedValue=dropdown.options[dropdown.selectedIndex].text
+    const selectedValue=dropdown.options[dropdown.selectedIndex].value
     console.log(selectedValue)
     return {chore: selectedValue, money: getValue()}
 }
 async function getValue(){
     const dropdown=document.getElementById('money');
-    const selectedValue=dropdown.options[dropdown.selectedIndex].text
+    const selectedValue=dropdown.options[dropdown.selectedIndex].value
     console.log(selectedValue)
     return selectedValue
 }
 
 // Add chore to Firestore
 async function addLog() {
-    
-    const choreData = await getChore();
-    const logText = choreData.chore;
-    const moneyAmount = choreData.money;
-
-    if (logText === "") return;
-
     try {
-        console.log("Adding log to Firestore:", logText, moneyAmount);  // Debugging log
+        const choreData = await getChore();
+        const logText = choreData.chore;
+        const moneyAmount = await Promise.resolve(choreData.money); // Ensure moneyAmount is resolved
+
+        if (!logText) return;
+
+        console.log("Adding log to Firestore:", logText, moneyAmount); // Debugging log
+
         await addDoc(collection(db, "chores"), {
             chore: logText,
             money: moneyAmount,
         });
-        loadLogs();  // Refresh the list after adding
+
+        loadLogs(); // Refresh the list after adding
     } catch (e) {
         console.error("Error adding document: ", e);
     }
 }
+
 
 async function addApprovedLog(chore,money,button,docId) {
     explodeCoins(50)
