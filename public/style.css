@@ -49,6 +49,7 @@ body {
     cursor: pointer;
 }
 
+
 #addLog {
     background: white;
     padding: 20px;
@@ -159,8 +160,13 @@ li {
 }
 
 #money{
-    justify-content: left;
     width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+
 }
 
 @keyframes fadeInUp {

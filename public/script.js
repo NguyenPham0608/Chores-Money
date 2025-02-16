@@ -45,13 +45,24 @@ async function updateSpan() {
     total.innerText = 'Total: $ ' + totalMoney.toFixed(2);
 }
 
+function getChore(){
+    const dropdown=document.getElementById('choreSelect');
+    const selectedValue=dropdown.options[dropdown.selectedIndex].text
+    console.log(selectedValue)
+    return {chore: selectedValue, money: getValue()}
+}
+function getValue(){
+    const dropdown=document.getElementById('money');
+    const selectedValue=dropdown.options[dropdown.selectedIndex].text
+    console.log(selectedValue)
+    return selectedValue
+}
 
 // Add chore to Firestore
 async function addLog() {
-    const logInput = document.getElementById('logInput');
-    const money = document.getElementById('money');
-    const logText = logInput.value.trim();
-    const moneyAmount = money.value.trim();
+    
+    const logText = getChore().chore;
+    const moneyAmount = getChore().money;
 
     if (logText === "") return;
 
@@ -61,8 +72,6 @@ async function addLog() {
             chore: logText,
             money: moneyAmount,
         });
-        logInput.value = '';
-        money.value = '';
         loadLogs();  // Refresh the list after adding
     } catch (e) {
         console.error("Error adding document: ", e);
@@ -123,7 +132,7 @@ async function loadLogs() {
             const data = doc.data();
             console.log(data);
             const li = document.createElement('li');
-            li.innerHTML = `${data.chore} $${data.money}`;  // Display timestamp
+            li.innerHTML = `${data.chore} ${data.money}`;  // Display timestamp
 
             const approveButton = document.createElement('button');
             approveButton.classList.add('approved-btn');
@@ -147,7 +156,7 @@ async function loadApprovedLogs() {
             const data = doc.data();
             const li = document.createElement('li');
             const timestamp = new Date(data.timestamp.seconds * 1000).toLocaleString();  // Convert timestamp to readable format
-            li.innerHTML = `${data.approvedChore} $${data.approvedMoney} ${timestamp}`;  // Display timestamp
+            li.innerHTML = `${data.approvedChore} ${data.approvedMoney} ${timestamp}`;  // Display timestamp
 
             const deleteButton = document.createElement('button');
             deleteButton.classList.add('delete-btn');
