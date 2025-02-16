@@ -47,13 +47,13 @@ async function updateSpan() {
 
 async function getChore(){
     const dropdown=document.getElementById('choreSelect');
-    const selectedValue=dropdown.options[dropdown.selectedIndex].value
+    const selectedValue=dropdown.options[dropdown.selectedIndex].text
     console.log(selectedValue)
     return {chore: selectedValue, money: getValue()}
 }
 async function getValue(){
     const dropdown=document.getElementById('money');
-    const selectedValue=dropdown.options[dropdown.selectedIndex].value
+    const selectedValue=dropdown.options[dropdown.selectedIndex].text
     console.log(selectedValue)
     return selectedValue
 }
