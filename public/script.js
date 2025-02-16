@@ -45,15 +45,15 @@ async function updateSpan() {
     total.innerText = 'Total: $ ' + totalMoney.toFixed(2);
 }
 
-function getChore(){
+async function getChore(){
     const dropdown=document.getElementById('choreSelect');
-    const selectedValue=dropdown.options[dropdown.selectedIndex].text
+    const selectedValue=dropdown.options[dropdown.selectedIndex].value
     console.log(selectedValue)
     return {chore: selectedValue, money: getValue()}
 }
-function getValue(){
+async function getValue(){
     const dropdown=document.getElementById('money');
-    const selectedValue=dropdown.options[dropdown.selectedIndex].text
+    const selectedValue=dropdown.options[dropdown.selectedIndex].value
     console.log(selectedValue)
     return selectedValue
 }
@@ -61,8 +61,9 @@ function getValue(){
 // Add chore to Firestore
 async function addLog() {
     
-    const logText = getChore().chore;
-    const moneyAmount = getChore().money;
+    const choreData = await getChore();
+    const logText = choreData.chore;
+    const moneyAmount = choreData.money;
 
     if (logText === "") return;
 
