@@ -53,7 +53,7 @@ async function getChore(){
 }
 async function getValue(){
     const dropdown=document.getElementById('money');
-    const selectedValue=dropdown.options[dropdown.selectedIndex].text
+    const selectedValue=dropdown.options[dropdown.selectedIndex].value
     console.log(selectedValue)
     return selectedValue
 }
@@ -135,7 +135,7 @@ async function loadLogs() {
             const data = doc.data();
             console.log(data);
             const li = document.createElement('li');
-            li.innerHTML = `${data.chore} ${data.money}`;  // Display timestamp
+            li.innerHTML = `${data.chore} $${data.money}`;  // Display timestamp
 
             const approveButton = document.createElement('button');
             approveButton.classList.add('approved-btn');
@@ -159,7 +159,7 @@ async function loadApprovedLogs() {
             const data = doc.data();
             const li = document.createElement('li');
             const timestamp = new Date(data.timestamp.seconds * 1000).toLocaleString();  // Convert timestamp to readable format
-            li.innerHTML = `${data.approvedChore} ${data.approvedMoney} ${timestamp}`;  // Display timestamp
+            li.innerHTML = `${data.approvedChore} $${data.approvedMoney} ${timestamp}`;  // Display timestamp
 
             const deleteButton = document.createElement('button');
             deleteButton.classList.add('delete-btn');

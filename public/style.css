@@ -1,7 +1,7 @@
 * {
     transition: 0.4s all ;
     font-family: comfortaa;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 body {
     display: flex;
@@ -24,7 +24,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 200px;
     text-align: center;
     /* margin: 20px; */
     
@@ -61,7 +61,7 @@ body {
 }
 
 #pendingList{
-    max-height: 240px;
+    max-height: 140px;
     overflow-y: auto;
     text-align: center;
     justify-content: center;
@@ -81,7 +81,7 @@ body {
 }
 
 #log{
-    max-height: 240px;
+    max-height: 140px;
     overflow-y: auto;
     text-align: center;
     justify-content: center;
