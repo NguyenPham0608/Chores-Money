@@ -1,8 +1,11 @@
 // Import Firebase modules
+// Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"; // Add Auth imports
 import Coin from "./coin.js";
 import { override } from "./coin.js";
+
 // Firebase config
 const firebaseConfig = {
     apiKey: "AIzaSyARPjGht5NCpztYmZ2-TJnO7wkCX3_jSJk",
@@ -17,6 +20,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app); // Initialize Auth
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
