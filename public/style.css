@@ -31,6 +31,10 @@ body {
 }
 
 .container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     background: white;
     padding: 20px;
     border-radius: 10px;
@@ -97,7 +101,7 @@ input, button {
     border-radius: 5px;
 }
 button {
-    background-color: #0055ff;
+    background-color: #00a6ff;
     color: white;
     cursor: pointer;
     border: none;
@@ -199,9 +203,40 @@ li {
     width: 100px;
     padding: 10px;
     margin: 10px 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
     color: black;
     background-color: #efefef;
+}
+
+#signInBtn{
+    width: 92%;
+    padding: 10px;
+    margin: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+    background-color: #7fff78;
+
+}
+
+/* #signInBtn{
+    width: 70%;
+    padding: 10px;
+    margin: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+} */
+
+#userDisplay{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 300px;
+    padding: 10px;
+    margin: 10px 10px;
+    border-radius: 5px;
+    color: black;
+    background-color: #005eff4b;
 }

@@ -2,7 +2,7 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"; // Add Auth imports
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"; // Add Auth imports
 import Coin from "./coin.js";
 import { override } from "./coin.js";
 
@@ -21,6 +21,51 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app); // Initialize Auth
+const provider = new GoogleAuthProvider();
+const total = document.getElementById('total');
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const signInBtn = document.getElementById("signInBtn");
+    const userDisplay = document.getElementById("userDisplay");
+    
+    // Sign-in button click event
+    signInBtn.addEventListener("click", () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+
+                console.log("User signed in:", result.user);
+            })
+            .catch((error) => {
+                console.error("Error during sign-in:", error);
+            });
+    });
+    
+    // Sign-out button click event
+
+    
+    // Authentication state observer
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+
+            console.log("User is signed in:", user);
+            userDisplay.textContent = `Signed in as: ${user.displayName}`;
+            signInBtn.style.display = "none";
+            total.style.display = "block";
+        } else {
+            console.log("No user signed in");
+            userDisplay.textContent = "Not signed in";
+            signInBtn.style.display = "block";
+            total.style.display = "none";
+        }
+    });
+});
+
+
+  
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -30,7 +75,6 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 ctx.scale(scale, scale);
 
-const total = document.getElementById('total');
 let coinArray=[];
 
 
@@ -117,6 +161,7 @@ async function deleteLog(docId, button) {
         li.remove();
     }, 200);
 }
+
 
 // Load chores from Firestore
 async function loadLogs() {
@@ -273,6 +318,8 @@ function signOutUser() {
             document.getElementById('authMessage').textContent = `Error: ${error.message}`;
         });
 }
+
+
 
 window.onload = () => {
     document.getElementById('addButton').addEventListener('click', addLog);

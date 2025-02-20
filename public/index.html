@@ -10,10 +10,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <button id="signOutButton" style="display: none;">Sign Out</button>
     <canvas id="canvas"></canvas>
+    <script>
+
+    </script>
+    <div id="userDisplay">Not signed in</div>
     <div class="ui">
-        <span id="total">Total: $ 0.00</span>
+        <span id="total" style="display: none;">Total: $ 0.00</span>
         <div class="container" id="authSection">
             <h2 id="authTitle">Sign In</h2>
             <input type="email" id="email" placeholder="Email" />
@@ -21,6 +26,8 @@
             <button id="signInButton">Sign In</button>
             <button id="signUpButton">Sign Up</button>
             <button id="signOutButton" style="display: none;">Sign Out</button>
+            <button id="signInBtn">Sign in with Google</button>
+
             <p id="authMessage"></p>
         </div>
         <div class="container" id="addChore">
