@@ -191,3 +191,17 @@ li {
         transform: translateY(20px);
     }
 }
+
+#signOutButton{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100px;
+    padding: 10px;
+    margin: 10px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+    background-color: #efefef;
+}

@@ -10,9 +10,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <button id="signOutButton" style="display: none;">Sign Out</button>
     <canvas id="canvas"></canvas>
     <div class="ui">
         <span id="total">Total: $ 0.00</span>
+        <div class="container" id="authSection">
+            <h2 id="authTitle">Sign In</h2>
+            <input type="email" id="email" placeholder="Email" />
+            <input type="password" id="password" placeholder="Password" />
+            <button id="signInButton">Sign In</button>
+            <button id="signUpButton">Sign Up</button>
+            <button id="signOutButton" style="display: none;">Sign Out</button>
+            <p id="authMessage"></p>
+        </div>
         <div class="container" id="addChore">
             <h2>Chores</h2>
             <label for="choreSelect">Chore</label>

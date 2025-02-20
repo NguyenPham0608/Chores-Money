@@ -118,16 +118,6 @@ async function deleteLog(docId, button) {
     }, 200);
 }
 
-async function approveLog(docId, button) {
-    const li = button.parentElement;
-    li.style.animation = "fadeOut 0.3s forwards";
-    setTimeout(async () => {
-        console.log("Deleting chore:", docId);  // Debugging log
-        await deleteDoc(doc(db, "chores", docId));  // Delete from Firestore
-        li.remove();
-    }, 300);
-}
-
 // Load chores from Firestore
 async function loadLogs() {
     const pendingList = document.getElementById('pendingList');
@@ -208,5 +198,88 @@ function explodeCoins(number) {
         addCoin(window.innerWidth/2, window.innerHeight/2, 0.1);
     }
 }
+
+// Authentication state listener
+let currentUser = null;
+onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    const authSection = document.getElementById('authSection');
+    const choreSection = document.getElementById('addChore');
+    const pendingSection = document.getElementById('addLog');
+    const approvedSection = document.getElementById('log');
+    const signInButton = document.getElementById('signInButton');
+    const signUpButton = document.getElementById('signUpButton');
+    const signOutButton = document.getElementById('signOutButton');
+    const authMessage = document.getElementById('authMessage');
+
+    if (user) {
+        // User is signed in
+        authSection.style.display = 'none';
+        choreSection.style.display = 'block';
+        pendingSection.style.display = 'block';
+        approvedSection.style.display = 'block';
+        signOutButton.style.display = 'block';
+        authMessage.textContent = `Welcome, ${user.email}`;
+        loadLogs(); // Load user-specific logs
+        loadApprovedLogs();
+    } else {
+        // No user is signed in
+        authSection.style.display = 'block';
+        choreSection.style.display = 'none';
+        pendingSection.style.display = 'none';
+        approvedSection.style.display = 'none';
+        signOutButton.style.display = 'none';
+        authMessage.textContent = '';
+    }
+});
+
+// Sign In
+function signIn() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const authMessage = document.getElementById('authMessage');
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            authMessage.textContent = 'Signed in successfully!';
+        })
+        .catch((error) => {
+            authMessage.textContent = `Error: ${error.message}`;
+        });
+}
+
+// Sign Up
+function signUp() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const authMessage = document.getElementById('authMessage');
+
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            authMessage.textContent = 'Signed up successfully!';
+        })
+        .catch((error) => {
+            authMessage.textContent = `Error: ${error.message}`;
+        });
+}
+
+// Sign Out
+function signOutUser() {
+    signOut(auth)
+        .then(() => {
+            document.getElementById('authMessage').textContent = 'Signed out successfully!';
+        })
+        .catch((error) => {
+            document.getElementById('authMessage').textContent = `Error: ${error.message}`;
+        });
+}
+
+window.onload = () => {
+    document.getElementById('addButton').addEventListener('click', addLog);
+    document.getElementById('signInButton').addEventListener('click', signIn);
+    document.getElementById('signUpButton').addEventListener('click', signUp);
+    document.getElementById('signOutButton').addEventListener('click', signOutUser);
+    // Initial load will be handled by onAuthStateChanged
+};
 
 loop();
