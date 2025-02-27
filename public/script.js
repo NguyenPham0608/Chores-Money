@@ -23,6 +23,7 @@ const db = getFirestore(app);
 const auth = getAuth(app); // Initialize Auth
 const provider = new GoogleAuthProvider();
 const total = document.getElementById('total');
+const money=document.getElementById('money');
 
 
 
@@ -65,16 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Handle showing/hiding the custom chore input
-document.getElementById("choreSelect").addEventListener("change", function() {
-    let customChoreInput = document.getElementById("customChoreInput");
-    customChoreInput.style.display = this.value === "miscellaneous" ? "block" : "none";
-});
 
-// Handle showing/hiding the custom money input
-document.getElementById("money").addEventListener("change", function() {
-    let customMoneyInput = document.getElementById("customMoneyInput");
-    customMoneyInput.style.display = this.value === "custom" ? "block" : "none";
-});
   
 
 const canvas = document.getElementById('canvas');
@@ -136,6 +128,8 @@ async function addLog() {
             money: moneyAmount,
         });
         customChoreInput.style.display = "none";
+        dropdown.style.display = "block";
+
         dropdown.selectedIndex = 0;
         // choreSection
         loadLogs(); // Refresh the list after adding
@@ -344,5 +338,34 @@ window.onload = () => {
     document.getElementById('signOutButton').addEventListener('click', signOutUser);
     // Initial load will be handled by onAuthStateChanged
 };
+
+dropdown.addEventListener("change", function() {
+    let customChoreInput = document.getElementById("customChoreInput");
+    customChoreInput.style.display = "block";
+    dropdown.style.display = "none";
+    window.addEventListener("keydown", function(e) {
+        if(e.key=='Enter'){
+            dropdown.style.display = "block";
+            dropdown.selectedIndex = 0;
+            customChoreInput.style.display = "none";
+        }
+    })
+
+});
+
+// Handle showing/hiding the custom money input
+money.addEventListener("change", function() {
+    let customMoneyInput = document.getElementById("customMoneyInput");
+
+    customMoneyInput.style.display = "block";
+    money.style.display = "none";
+    window.addEventListener("keydown", function(e) {
+        if(e.key=='Enter'){
+            money.style.display = "block";
+            money.selectedIndex = 0;
+            customMoneyInput.style.display = "none";
+        }
+    })
+});
 
 loop();

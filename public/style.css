@@ -171,7 +171,7 @@ li {
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
-
+    display: flexbox;
 }
 
 @keyframes fadeInUp {
