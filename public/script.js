@@ -64,7 +64,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// Handle showing/hiding the custom chore input
+document.getElementById("choreSelect").addEventListener("change", function() {
+    let customChoreInput = document.getElementById("customChoreInput");
+    customChoreInput.style.display = this.value === "miscellaneous" ? "block" : "none";
+});
 
+// Handle showing/hiding the custom money input
+document.getElementById("money").addEventListener("change", function() {
+    let customMoneyInput = document.getElementById("customMoneyInput");
+    customMoneyInput.style.display = this.value === "custom" ? "block" : "none";
+});
   
 
 const canvas = document.getElementById('canvas');
@@ -76,6 +86,8 @@ canvas.height = window.innerHeight;
 ctx.scale(scale, scale);
 
 let coinArray=[];
+
+const dropdown=document.getElementById('choreSelect');
 
 
 function addCoin(x, y, scale) {
@@ -94,8 +106,10 @@ async function updateSpan() {
 }
 
 async function getChore(){
-    const dropdown=document.getElementById('choreSelect');
-    const selectedValue=dropdown.options[dropdown.selectedIndex].text
+    let selectedValue=dropdown.options[dropdown.selectedIndex].text
+    if(selectedValue=='Custom'){
+        selectedValue=customChoreInput.value
+    }
     console.log(selectedValue)
     return {chore: selectedValue, money: getValue()}
 }
@@ -121,7 +135,9 @@ async function addLog() {
             chore: logText,
             money: moneyAmount,
         });
-
+        customChoreInput.style.display = "none";
+        dropdown.selectedIndex = 0;
+        // choreSection
         loadLogs(); // Refresh the list after adding
     } catch (e) {
         console.error("Error adding document: ", e);

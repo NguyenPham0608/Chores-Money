@@ -13,9 +13,7 @@
 
     <button id="signOutButton" style="display: none;">Sign Out</button>
     <canvas id="canvas"></canvas>
-    <script>
 
-    </script>
     <div id="userDisplay">Not signed in</div>
     <div class="ui">
         <span id="total" style="display: none;">Total: $ 0.00</span>
@@ -27,11 +25,12 @@
             <button id="signUpButton">Sign Up</button>
             <button id="signOutButton" style="display: none;">Sign Out</button>
             <button id="signInBtn">Sign in with Google</button>
-
             <p id="authMessage"></p>
         </div>
+
         <div class="container" id="addChore">
             <h2>Chores</h2>
+            
             <label for="choreSelect">Chore</label>
             <select id="choreSelect">
                 <option value="prepare-morning">Prepare Morning</option>
@@ -41,8 +40,11 @@
                 <option value="laundry">Laundry</option>
                 <option value="shower">Shower</option>
                 <option value="dinner">Dinner</option>
-                <option value="miscellaneous">Miscellaneous</option>
+                <option value="miscellaneous">Custom</option>
             </select>
+            <input type="text" id="customChoreInput" placeholder="Enter custom chore" style="display: none;" />
+
+            <label for="money">Money Earned</label>
             <select id="money">
                 <option value="0.25">$0.25</option>
                 <option value="0.50">$0.50</option>
@@ -51,27 +53,27 @@
                 <option value="1.25">$1.25</option>
                 <option value="1.75">$1.75</option>
                 <option value="2.00">$2.00</option>
-                <!-- <option value="custom"><input type="text" id="customInput" placeholder="Money Earned"></option> -->
+                <option value="custom">Custom</option>
             </select>
-            <!-- <input type="text" id="money" placeholder="Money Earned"> -->
+            <input type="number" id="customMoneyInput" placeholder="Enter custom amount" style="display: none;" />
+
             <button id="addButton">Add Chore</button>
         </div>
+
         <div class="container" id="addLog">
             <h3>Pending Approval</h3>
-
-            <ul id="pendingList">
-
-            </ul>
+            <ul id="pendingList"></ul>
         </div>
+
         <div class="container" id="log">
             <h3>Approved Chores</h3>
             <ul id="logList"></ul>
         </div>
-        <input type="text" id="customInput" placeholder="Enter your own option" style="display: none;" />
     </div>
 
-
+    <script src="data.js"></script>
     <script type="module" src="script.js"></script>
+
 
 </body>
 </html>
