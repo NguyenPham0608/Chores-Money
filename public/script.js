@@ -24,9 +24,11 @@ const auth = getAuth(app); // Initialize Auth
 const provider = new GoogleAuthProvider();
 const total = document.getElementById('total');
 const money=document.getElementById('money');
+const updateInterval=1
 
 
-
+const customChoreInput = document.getElementById("customChoreInput");
+const customMoneyInput = document.getElementById("customMoneyInput");
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -92,7 +94,7 @@ async function updateSpan() {
     let totalMoney = 0;
     querySnapshot.forEach((doc) => {
         const data = doc.data();
-        totalMoney += parseFloat(data.approvedMoney);
+        totalMoney += Number(data.approvedMoney);
     });
     total.innerText = 'Total: $ ' + totalMoney.toFixed(2);
 }
@@ -106,8 +108,11 @@ async function getChore(){
     return {chore: selectedValue, money: getValue()}
 }
 async function getValue(){
-    const dropdown=document.getElementById('money');
-    const selectedValue=dropdown.options[dropdown.selectedIndex].value
+    console.log(money.options[money.selectedIndex].value)
+    let selectedValue=money.options[money.selectedIndex].value
+    if(selectedValue=='custom'){
+        selectedValue=customMoneyInput.value
+    }
     console.log(selectedValue)
     return selectedValue
 }
@@ -129,8 +134,14 @@ async function addLog() {
         });
         customChoreInput.style.display = "none";
         dropdown.style.display = "block";
+        money.style.display = "block";
+        customMoneyInput.style.display = "none";
+
+
 
         dropdown.selectedIndex = 0;
+        money.selectedIndex = 0;
+
         // choreSection
         loadLogs(); // Refresh the list after adding
     } catch (e) {
@@ -226,6 +237,8 @@ async function loadApprovedLogs() {
 
 
 function loop(){
+    let selectedValue=money.options[money.selectedIndex].value
+    console.log(selectedValue)
     ctx.clearRect(0, 0, 100000000, 10000000000);
     if(!override){
 
@@ -340,32 +353,36 @@ window.onload = () => {
 };
 
 dropdown.addEventListener("change", function() {
-    let customChoreInput = document.getElementById("customChoreInput");
-    customChoreInput.style.display = "block";
-    dropdown.style.display = "none";
-    window.addEventListener("keydown", function(e) {
-        if(e.key=='Enter'){
-            dropdown.style.display = "block";
-            dropdown.selectedIndex = 0;
-            customChoreInput.style.display = "none";
-        }
-    })
-
+    if(dropdown.options[dropdown.selectedIndex].text=='Custom'){
+        let customChoreInput = document.getElementById("customChoreInput");
+        customChoreInput.style.display = "block";
+        dropdown.style.display = "none";
+        window.addEventListener("keydown", function(e) {
+            if(e.key=='Enter'){
+                dropdown.style.display = "block";
+                dropdown.selectedIndex = 0;
+                customChoreInput.style.display = "none";
+            }
+        })
+    
+    }
 });
 
 // Handle showing/hiding the custom money input
 money.addEventListener("change", function() {
-    let customMoneyInput = document.getElementById("customMoneyInput");
+    if(money.options[money.selectedIndex].text=='Custom'){
+        let customMoneyInput = document.getElementById("customMoneyInput");
 
-    customMoneyInput.style.display = "block";
-    money.style.display = "none";
-    window.addEventListener("keydown", function(e) {
-        if(e.key=='Enter'){
-            money.style.display = "block";
-            money.selectedIndex = 0;
-            customMoneyInput.style.display = "none";
-        }
-    })
+        customMoneyInput.style.display = "block";
+        money.style.display = "none";
+        window.addEventListener("keydown", function(e) {
+            if(e.key=='Enter'){
+                money.style.display = "block";
+                money.selectedIndex = 0;
+                customMoneyInput.style.display = "none";
+            }
+        })
+    }
 });
 
 loop();
