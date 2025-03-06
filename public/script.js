@@ -17,6 +17,8 @@ const firebaseConfig = {
     measurementId: "G-1C5C7EH9JK"
 };
 
+let userName='Guest';
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -53,9 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Authentication state observer
     onAuthStateChanged(auth, (user) => {
         if (user) {
-
+            userName=user.displayName
             console.log("User is signed in:", user);
-            userDisplay.textContent = `Signed in as: ${user.displayName}`;
+            userDisplay.textContent = `Signed in as: ${userName}`;
             signInBtn.style.display = "none";
             total.style.display = "block";
         } else {
@@ -359,7 +361,7 @@ dropdown.addEventListener("change", function() {
         dropdown.style.display = "none";
         window.addEventListener("keydown", function(e) {
             if(e.key=='Enter'){
-                dropdown.style.display = "block";
+                dropdown.style.display = "inline-block";
                 dropdown.selectedIndex = 0;
                 customChoreInput.style.display = "none";
             }
@@ -377,7 +379,7 @@ money.addEventListener("change", function() {
         money.style.display = "none";
         window.addEventListener("keydown", function(e) {
             if(e.key=='Enter'){
-                money.style.display = "block";
+                money.style.display = "inline-block";
                 money.selectedIndex = 0;
                 customMoneyInput.style.display = "none";
             }

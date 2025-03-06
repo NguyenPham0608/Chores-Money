@@ -135,25 +135,29 @@ li {
     animation: fadeInUp 0.4s forwards;
 }
 .delete-btn {
+    margin: 0;
+
     background: #ff0066;
     color: white;
     border: none;
-    padding: 5px;
+    padding: 8px;
     cursor: pointer;
     text-align: center;
     border-radius: 5px;
-    width: 60px;
+    width: auto;
+
 }
 
 .approved-btn {
-    background-color: #30b010;
+    background-color: #37dc0e;
+    margin: 0;
     color: white;
     border: none;
-    padding: 5px;
+    padding: 8px;
     cursor: pointer;
     text-align: center;
     border-radius: 5px;
-    width: 50%;
+    width: auto;
     border: none;
 }
 
