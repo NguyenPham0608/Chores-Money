@@ -135,8 +135,8 @@ async function addLog() {
             money: moneyAmount,
         });
         customChoreInput.style.display = "none";
-        dropdown.style.display = "block";
-        money.style.display = "block";
+        dropdown.style.display = "inline-block";
+        money.style.display = "inline-block";
         customMoneyInput.style.display = "none";
 
 
