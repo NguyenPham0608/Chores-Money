@@ -142,7 +142,7 @@ async function addLog() {
 
 
         dropdown.selectedIndex = 0;
-        money.selectedIndex = 0;
+        money.selectedIndex = 3;
 
         // choreSection
         loadLogs(); // Refresh the list after adding
